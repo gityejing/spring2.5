@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd 
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd 
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd 
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+
+	<!-- 自动扫描与装配 -->
+	<context:component-scan base-package="cn.itcast.k_tx_hibernate"></context:component-scan>
+
+
+	<!-- 导入外部的properties配置文件 -->
+	<context:property-placeholder location="classpath:cn/itcast/k_tx_hibernate/jdbc.properties"/>
+
+
+	<!-- 配置DataSource（c3p0数据库连接池） -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<!-- 连接信息 -->
+		<property name="jdbcUrl" value="${jdbcUrl}"></property>
+		<property name="driverClass" value="${driverClass}"></property>
+		<property name="user" value="${username}"></property>
+		<property name="password" value="${password}"></property>
+		<!-- 管理相关的配置 -->
+		<property name="initialPoolSize" value="3"></property>
+		<property name="minPoolSize" value="3"></property>
+		<property name="maxPoolSize" value="5"></property>
+		<property name="acquireIncrement" value="3"></property>
+		<property name="maxIdleTime" value="1800"></property>
+	</bean>
+	
+
+
+	<!-- 
+		配置SessionFactory（LocalSessionFactoryBean）。
+		方式一：
+		 	指定Hibernate配置文件路径
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="configLocation" value="classpath:cn/itcast/k_tx_hibernate/hibernate.cfg.xml"></property>
+	</bean>
+	 -->
+	 
+	 <!-- 
+	 	配置SessionFactory（LocalSessionFactoryBean）。
+	 	方式二：
+	 		不需要指定Hibernate配置文件，而是把配置写在Spring的配置文件中。
+	 	通过hibernateProperties属性指定Hibernate的相关配置，注意：一定要加上“hibernate.”前缀。
+	 	通过dataSource属性指定一个已经配好的数据库连接池对象。
+	 	通过mappingLocations属性指定映射文件的路径，可以使用通配符"*"。
+	  -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="mappingLocations" value="classpath:cn/itcast/k_tx_hibernate/*.hbm.xml"></property>
+	</bean>
+
+
+
+	<!-- 配置HibernateTemplate工具类 -->
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+
+	
+	<!-- 配置声明式的事务管理（采用基于注解的方式） -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+
+
+</beans>
+

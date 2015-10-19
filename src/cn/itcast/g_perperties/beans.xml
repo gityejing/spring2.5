@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+				http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+				http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+
+	<!-- 
+		方式一：
+			加载外部的properties配置文件。可以加载多个外部的配置文件，后加载的会覆盖先加载的相同配置的值。 
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:cn/itcast/g_perperties/jdbc_1.properties</value>
+				<value>classpath:cn/itcast/g_perperties/jdbc_2.properties</value>
+			</list>
+		</property>
+	</bean>
+	-->
+
+	<!-- 方式二：（推荐）加载外部的properties配置文件。 -->
+	<context:property-placeholder location="classpath:cn/itcast/g_perperties/jdbc.properties"/>
+
+
+	<!-- 配置UserDao -->
+	<bean id="userDao" class="cn.itcast.g_perperties.UserDaoImpl">
+		<property name="jdbcUrl" value="${jdbcUrl}"></property>
+		<property name="driverClass" value="${driverClass}"></property>
+		<property name="username" value="${username}"></property>
+		<property name="password" value="${passwd}"></property>
+	</bean>
+	
+	
+	
+	<!-- 配置UserService -->
+	<bean id="userService" class="cn.itcast.g_perperties.UserServiceImpl">
+		<property name="userDao" ref="userDao"></property>
+	</bean>
+	
+	
+	
+</beans>
+

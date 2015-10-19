@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+				http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+				http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+	<!-- 
+		使用<property>元素，以实现通过属性（setter）注入
+	 -->
+	<bean id="userDao" class="cn.itcast.f_di.UserDao" lazy-init="true">
+		<property name="jdbcUrl" value="jdbc:mysql:///test"></property>
+		<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+	</bean>
+
+
+	<!-- 通过构造方法注入 -->
+	<bean id="userDao2" class="cn.itcast.f_di.UserDao">
+		<constructor-arg index="1" value="com.mysql.jdbc.Driver"></constructor-arg>
+		<constructor-arg index="0" value="jdbc:mysql:///test"></constructor-arg>
+	</bean>
+	
+	
+	<!-- Spring会自动转换一些基本的类型
+		使用value属性注入一般的类型。
+		使用ref属性注入引用的bean。
+		使用<null>元素注入null值。
+		可以在property中写子元素<bean>以声明一个匿名的 bean，其作用仅为注入本属性，不能通过名称获取，这时即使写了id或name也不起作用，会被忽略。
+	 -->
+	<bean id="user" class="cn.itcast.f_di.User">
+		<property name="id" value="100"></property>
+		<!-- 
+		<property name="name" value="张三"></property>
+		 -->
+		<property name="name"> <null></null> </property>
+		<property name="gender" value="true"></property>
+		<!-- 
+		<property name="userDao" ref="userDao"></property>
+		 -->
+		<property name="userDao">
+			<bean class="cn.itcast.f_di.UserDao"></bean>
+		</property>
+		
+		<property name="birthday" value="2012-01-01"></property>
+		
+		<!-- 注入Set类型 -->
+		<property name="addressSet">
+			<set>
+				<!-- 
+				<value type="java.lang.String">棠东东路</value>
+				<value type="java.lang.String">科贸园</value>
+				 -->
+				<value>棠东东路</value>
+				<value>科贸园</value>
+			</set>
+		</property>
+		
+		
+		<!-- 注入Set类型，当声明集合指定强类型时，可以自动转型。如果没有指定类型，默认为String型。
+			也可以通过这里的type属性指定要转换的类型。
+		 -->
+		<property name="integerSet">
+			<set>
+				<value type="java.lang.Integer">100</value>
+				<value type="java.lang.Integer">200</value>
+				<value type="java.lang.Integer">300</value>
+			</set>
+		</property>
+		
+		
+		<!-- 注入List类型 -->
+		<property name="addressList">
+			<list>
+				<value>棠东东路</value>
+				<value>科贸园</value>
+			</list>
+		</property>
+		
+		
+		<!-- 注入Map类型 -->
+		<property name="addressMap">
+			<map>
+				<entry key="公司" value="科贸园"></entry>
+				<entry key="家庭" value="棠东东路"></entry>
+			</map>
+		</property>
+		
+		
+		<!-- 注入数组类型 -->
+		<property name="addressArray">
+			<list>
+				<value>棠东东路</value>
+				<value>科贸园</value>
+			</list>
+		</property>
+		
+		
+		<!-- 注入Properties类型 -->
+		<property name="myProps">
+			<props>
+				<prop key="身高">180CM</prop>
+				<prop key="体重">80KG</prop>
+			</props>
+		</property>
+		
+	</bean>
+	
+
+	<!-- 注册自定义的属性转换器 -->
+	<bean id="customEditorConfiger" class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+		<property name="customEditors">
+			<map>
+				<entry key="java.util.Date">
+					<bean class="cn.itcast.f_di.DatePropertyEditor">
+						<property name="format" value="yyyy-MM-dd"></property>
+					</bean>
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+</beans>
+

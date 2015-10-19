@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+				http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+				http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+
+	<!-- 通过class属性直接指定类名，通过反射创建实例。 -->
+	<bean id="userDao1" class="cn.itcast.d_bean.UserDaoImpl"></bean>
+	
+	<!-- 通过static的工厂方法创建实例。
+		class属性：工厂类的类名。
+		factory-method属性：static的工厂方法
+	 -->
+	<bean id="userDao2" class="cn.itcast.d_bean.MyDaoFactory" factory-method="getUserDaoInstance"></bean>
+	
+	
+	<!-- 通过非static的工厂方法创建实例。
+		factory-bean属性：工厂对象bean的名称。
+		factory-method属性：工厂方法
+	 -->
+	<bean id="myFactory" class="cn.itcast.d_bean.MyDaoFactory2"></bean>
+	<bean id="userDao3" factory-bean="myFactory" factory-method="getUserDaoInstance"></bean>
+
+	<!--
+		 id属性与name属性的作用都用于指定bean的名称。
+		 但id属性有一些约束，比如不能以数字或其他特殊字符开头，而name属性没有这个约束。
+	 -->
+	<bean id="aa" name="123" factory-bean="myFactory" factory-method="getUserDaoInstance"></bean>
+	
+
+</beans>
+

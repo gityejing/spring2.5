@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+				http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+				http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
+				default-lazy-init="true"
+				>
+
+
+	<!-- 通过class属性直接指定类名，通过反射创建实例。 
+		scope属性：
+			默认为singleton，表示是单例的形式。
+			可以配置为prototype，表示是每次调用getBean()都是一个新的实例。
+		lazy-init属性：		
+			单例对象默认是在ApplicationContext初始化时创建的。
+			这个属性默认为 可以配置为true，表示延迟初始化单例对象，延迟到第一次getBean()这个对象时。
+			默认为default，表示与<beans>元素中的default-lazy-init的配置一致。
+			
+		init-method属性：
+			指定一个方法，此方法在创建对象实例后被调用，一般做一些初始化的工作。
+		destroy-method属性：
+			指定一个方法，此方法在容器对象close()时被调用，一般做一些善后的工作。
+			销毁方法只有单例对象有效。
+	-->
+	<bean id="userDao1" class="cn.itcast.e_bean_scope.UserDaoImpl"
+		scope="" lazy-init="true" 
+		init-method="init"
+		destroy-method="destroy"
+		>
+		
+		
+	</bean>
+
+	
+
+</beans>
+
