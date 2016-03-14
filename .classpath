@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.7.0_79"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="lib/aspectjrt.jar"/>
+	<classpathentry kind="lib" path="lib/aspectjweaver.jar"/>
+	<classpathentry kind="lib" path="lib/c3p0-0.9.1.2.jar" sourcepath="D:/.m2/repository/c3p0/c3p0/0.9.1.2/c3p0-0.9.1.2-sources.jar"/>
+	<classpathentry kind="lib" path="lib/cglib-nodep-2.1_3.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.5-bin.jar"/>
+	<classpathentry kind="lib" path="lib/spring.jar"/>
+	<classpathentry kind="lib" path="lib_hibernate3/antlr-2.7.6.jar"/>
+	<classpathentry kind="lib" path="lib_hibernate3/commons-collections-3.1.jar"/>
+	<classpathentry kind="lib" path="lib_hibernate3/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="lib_hibernate3/hibernate3.jar"/>
+	<classpathentry kind="lib" path="lib_hibernate3/javassist-3.12.0.GA.jar"/>
+	<classpathentry kind="lib" path="lib_hibernate3/jta-1.1.jar"/>
+	<classpathentry kind="lib" path="lib_hibernate3/slf4j-api-1.6.1.jar"/>
+	<classpathentry kind="lib" path="lib_hibernate3/hibernate-jpa-2.0-api-1.0.1.Final.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

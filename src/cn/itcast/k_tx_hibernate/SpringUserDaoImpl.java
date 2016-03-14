@@ -5,7 +5,7 @@ import javax.annotation.Resource;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
-@Repository("springUserDao")
+@Repository(value="springUserDao")
 public class SpringUserDaoImpl implements UserDao {
 
 	// @Resource

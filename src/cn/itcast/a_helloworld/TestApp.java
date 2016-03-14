@@ -7,7 +7,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class TestApp {
 
 	
-	private ApplicationContext factory = new ClassPathXmlApplicationContext("applicationContext.xml");
+	private ApplicationContext factory = new ClassPathXmlApplicationContext("applicationContext.xml",getClass());
 	
 	@Test
 	public void test1() throws Exception {

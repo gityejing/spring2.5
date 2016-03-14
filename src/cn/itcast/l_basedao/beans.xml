@@ -9,14 +9,11 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd 
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
 
-
 	<!-- 自动扫描与装配 -->
-	<context:component-scan base-package="cn.itcast.k_tx_hibernate"></context:component-scan>
-
+	<context:component-scan base-package="cn.itcast.l_basedao"></context:component-scan>
 
 	<!-- 导入外部的properties配置文件 -->
-	<context:property-placeholder location="classpath:cn/itcast/k_tx_hibernate/jdbc.properties"/>
-
+	<context:property-placeholder location="classpath:cn/itcast/l_basedao/jdbc.properties"/>
 
 	<!-- 配置DataSource（c3p0数据库连接池） -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
@@ -25,6 +22,7 @@
 		<property name="driverClass" value="${driverClass}"></property>
 		<property name="user" value="${username}"></property>
 		<property name="password" value="${password}"></property>
+		
 		<!-- 管理相关的配置 -->
 		<property name="initialPoolSize" value="3"></property>
 		<property name="minPoolSize" value="3"></property>
@@ -32,8 +30,6 @@
 		<property name="acquireIncrement" value="3"></property>
 		<property name="maxIdleTime" value="1800"></property>
 	</bean>
-	
-
 
 	<!-- 
 		配置SessionFactory（LocalSessionFactoryBean）。
@@ -61,24 +57,20 @@
 			</props>
 		</property>
 		<property name="dataSource" ref="dataSource"></property>
-		<property name="mappingLocations" value="classpath:cn/itcast/k_tx_hibernate/*.hbm.xml"></property>
+		<property name="mappingLocations" value="classpath:cn/itcast/l_basedao/*.hbm.xml"></property>
 	</bean>
-
 
 
 	<!-- 配置HibernateTemplate工具类 -->
 	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
-
-
 	
 	<!-- 配置声明式的事务管理（采用基于注解的方式） -->
 	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	<tx:annotation-driven transaction-manager="transactionManager"/>
-
 
 </beans>
 

@@ -1,8 +1,7 @@
-package cn.itcast.k_tx_hibernate;
+package cn.itcast.l_basedao;
 
 import javax.annotation.Resource;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
 	@Resource
-	@Qualifier(value="userDao")
 	private UserDao userDao;
 
 	@Transactional

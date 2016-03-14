@@ -7,8 +7,10 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 
+import cn.itcast.l_basedao.BaseDao;
+
 @Repository("userDao")
-public class UserDaoImpl implements UserDao {
+public class UserDaoImpl extends BaseDao<User, Integer>implements UserDao {
 
 	@Resource
 	private SessionFactory sessionFactory;

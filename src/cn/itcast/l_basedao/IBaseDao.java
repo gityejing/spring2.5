@@ -1,13 +1,12 @@
-package cn.itcast.k_tx_hibernate.base;
+package cn.itcast.l_basedao;
 
 import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
-public interface IBaseDao<E, PK extends Serializable> extends ISqlCommonDao {
+public interface IBaseDao<E, PK extends Serializable> {
 	HibernateTemplate getHibernateTemplate();
-
 	/**
 	 * 获取该接口实现类操作的数据库表
 	 * 
@@ -52,16 +51,6 @@ public interface IBaseDao<E, PK extends Serializable> extends ISqlCommonDao {
 	 * 
 	 * @param hql
 	 * @param params
-	 * @param page
-	 * @return
-	 */
-	// List<E> findListByHql(String hql, Object[] params, PageInfo page);
-
-	/**
-	 * 根据HQL查询语句、参数列表、分页信息，将数据封装为dao实现类泛型指定的实体类型
-	 * 
-	 * @param hql
-	 * @param params
 	 * @param firstResult
 	 * @param maxResult
 	 * @return
@@ -94,16 +83,7 @@ public interface IBaseDao<E, PK extends Serializable> extends ISqlCommonDao {
 	 * @return
 	 */
 	int findCountByHql(final String hql, final Object[] params);
-
-	/**
-	 * 根据SQL查询语句、参数列表、分页信息查询数据，将数据封装为dao实现类泛型指定的实体类型
-	 * 
-	 * @param sql
-	 * @param params
-	 * @param page
-	 * @return
-	 */
-	// List<E> findListBySql(String sql, Object[] params, PageInfo page);
+	
 
 	/**
 	 * 根据SQL查询语句、参数列表查询数据，将数据封装为dao实现类泛型指定的实体类型。
@@ -122,8 +102,20 @@ public interface IBaseDao<E, PK extends Serializable> extends ISqlCommonDao {
 	 */
 	List<E> findListBySql(String sql);
 
+	
 	/**
+	 * 根据SQL查询语句、参数列表、分页信息，将数据封装为dao实现类泛型指定的实体类型
 	 * 
+	 * @param hql
+	 * @param params
+	 * @param firstResult
+	 * @param maxResult
+	 * @return
+	 */
+	List<E> findListBySql(String sql, Object[] params, Integer firstResult,
+			Integer maxResult);
+	
+	/**
 	 * @param sql
 	 * @param params
 	 * @return
